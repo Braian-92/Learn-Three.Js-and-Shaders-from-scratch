@@ -1,5 +1,6 @@
 import "./style.css"
 import * as THREE from "three"
+import gsap from 'gsap'
 
 // ! instalar dependencias
 // npm install 
@@ -7,6 +8,11 @@ import * as THREE from "three"
 // npm install three
 // ! ejecutar servidor local
 // npm run dev
+
+// ! cerrar server de terminal
+// CTRL + c -> S
+
+// npm instal gsap -> instalar greensock
 
 
 //Scene Mesh Camera Renderer
@@ -20,6 +26,10 @@ const material = new THREE.MeshBasicMaterial({ color: "purple", wireframe: true}
 const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
+
+//! movimiento por greensock
+gsap.to(mesh.position, {duration:1,delay:1,x:1})
+gsap.to(mesh.position, {duration:2,delay:2,x:-1})
 
 //Camera
 const aspect = {
@@ -45,8 +55,13 @@ const animate = () => {
   const elapsedTime = clock.getElapsedTime();
 
   //Update Rotation On X Axis and Y axis
-  mesh.rotation.x = elapsedTime;
-  mesh.rotation.y = elapsedTime * Math.PI * 2; //will rotate the cube a turn per second
+  // mesh.rotation.x = elapsedTime;
+  // mesh.rotation.y = elapsedTime * Math.PI * 2; //will rotate the cube a turn per second
+  // mesh.rotation.y = elapsedTime * 0.25; //will rotate the cube a turn per second
+
+  //! movimiento circular
+  // mesh.position.y = Math.sin(elapsedTime);
+  // mesh.position.x = Math.cos(elapsedTime);
 
   //Renderer
   renderer.render(scene, camera); //draw what the camera inside the scene captured
