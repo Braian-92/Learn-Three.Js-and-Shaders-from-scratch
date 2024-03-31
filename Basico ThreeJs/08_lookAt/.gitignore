@@ -1,0 +1,19 @@
+# Node
+node_modules/
+
+# Dependencias de desarrollo
+# Si usas dependencias de desarrollo que no quieres publicar, añádelas aquí.
+# Por ejemplo, puedes añadir la carpeta .env si tienes información sensible en ella.
+# .env
+
+# Logs
+logs
+*.log
+
+# Output de build
+dist/
+
+# Archivos de configuración
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
