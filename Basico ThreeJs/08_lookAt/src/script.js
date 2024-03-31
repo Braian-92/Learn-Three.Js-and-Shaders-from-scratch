@@ -41,6 +41,18 @@ scene.add(purpleMesh, yellowMesh, greenMesh, whiteMesh, pinkMesh, blueMesh);
 
 // yellowMesh.lookAt(whiteMesh.position);
 
+const cursor = {
+  x : 0,
+  y : 0,
+};
+
+window.addEventListener('mousemove', (event) => {
+  cursor.x = event.clientX / window.innerWidth - 0.5;
+  cursor.y = event.clientY / window.innerHeight - 0.5;
+  // console.log(cursor.x, cursor.y);
+});
+
+
 //Camera
 const aspect = {
   width: window.innerWidth,
@@ -62,6 +74,15 @@ const clock = new THREE.Clock();
 const animate = () => {
   //GetElapsedTime
   const elapsedTime = clock.getElapsedTime();
+
+  // greenMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+
+  purpleMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+  yellowMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+  greenMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+  whiteMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+  pinkMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
+  blueMesh.lookAt( new THREE.Vector3(cursor.x, -cursor.y, 1) );
 
   //Renderer
   renderer.render(scene, camera);
