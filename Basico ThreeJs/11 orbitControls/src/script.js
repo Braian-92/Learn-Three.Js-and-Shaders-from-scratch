@@ -48,9 +48,17 @@ renderer.setSize(aspect.width, aspect.height);
 //Clock Class
 const clock = new THREE.Clock();
 
+const orbitControls = new OrbitControls(camera, canvas);
+// orbitControls.autoRotate = true;
+// orbitControls.autoRotateSpeed = 50;
+orbitControls.enableDamping = true;
+orbitControls.dampingFactor = 0.01;
+
 const animate = () => {
   //GetElapsedTime
   const elapsedTime = clock.getElapsedTime();
+
+  orbitControls.update();
 
   //Renderer
   renderer.render(scene, camera);
