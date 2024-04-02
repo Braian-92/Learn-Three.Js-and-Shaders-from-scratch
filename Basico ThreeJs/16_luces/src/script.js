@@ -69,15 +69,15 @@ const gui = new dat.GUI();
 // gui.add(rectAreaLight, "height").min(0).max(7).step(0.01).name("height");
 
 //---------------------------------------6)SpotLight-----------------------------------------------
-// const spotLight = new THREE.SpotLight(0xffffff, 1, 8, Math.PI * 0.25, 0.1, 1);
-// gui.add(spotLight.position, "z").min(-3).max(3).step(0.01).name("Z Spot");
-// gui.add(spotLight, "angle").min(0).max(3).step(0.01).name("Spot Angle");
-// gui.add(spotLight, "penumbra").min(0).max(1).step(0.01).name("Spot Penumbra");
-// spotLight.position.z = 2;
-// scene.add(spotLight);
+const spotLight = new THREE.SpotLight(0xffffff, 1, 8, Math.PI * 0.25, 0.1, 1);
+gui.add(spotLight.position, "z").min(-3).max(3).step(0.01).name("Z Spot");
+gui.add(spotLight, "angle").min(0).max(3).step(0.01).name("Spot Angle");
+gui.add(spotLight, "penumbra").min(0).max(1).step(0.01).name("Spot Penumbra");
+spotLight.position.z = 2;
+scene.add(spotLight);
 //----------------------------------------SpotLightHelper------------------------------------------
-// const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-// scene.add(spotLightHelper);
+const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+scene.add(spotLightHelper);
 //-------------------------------------------Resizing----------------------------------------------
 window.addEventListener("resize", () => {
   //Update Size
