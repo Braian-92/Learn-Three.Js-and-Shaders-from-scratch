@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { gsap } from "gsap";
 
+// https://threejs.org/docs/?q=raycaster#api/en/core/Raycaster
+
 //Scene
 const scene = new THREE.Scene();
 
@@ -49,6 +51,23 @@ scene.add(camera);
 const canvas = document.querySelector(".draw");
 const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(aspect.width, aspect.height);
+
+
+
+//! raycaster
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+window.addEventListener('mousemove', (e) => {
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects([mesh, mesh2]);
+  console.log(intersects);
+});
+
 
 //OrbitControls
 const orbitControls = new OrbitControls(camera, canvas);
