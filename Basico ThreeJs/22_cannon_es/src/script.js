@@ -1,6 +1,11 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import * as CANNON from 'cannon-es';
+
+console.log(CANNON);
+
+// npm install cannon-es
 
 //Link to Cannon.js library
 //cannon-es = https://pmndrs.github.io/cannon-es/docs/index.html
@@ -59,6 +64,29 @@ camera.position.z = 5;
 camera.position.y = 2;
 scene.add(camera);
 
+//! mundo fisico
+const world = new CANNON.World();
+world.gravity.set(0, -9.81, 0);
+
+//! forma esferica en mundo fisico
+const sphericalShape = new CANNON.Sphere(0.3);
+const sphereBody = new CANNON.Body({
+  mass: 1,
+  position: new CANNON.Vec3(0, 1, 0),
+  shape: sphericalShape
+});
+world.addBody(sphereBody);
+
+//! forma plana en mundo fisico
+const planeShape = new CANNON.Plane();
+const planeBody = new CANNON.Body({
+  mass: 0,
+  position: new CANNON.Vec3(0, 0, 0),
+  shape: planeShape
+});
+planeBody.quaternion.setFromAxisAngle( new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5 );
+world.addBody(planeBody);
+
 //Renderer
 const canvas = document.querySelector(".draw");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -73,12 +101,23 @@ orbitControls.enableDamping = true;
 //Clock Class
 const clock = new THREE.Clock();
 
+let previusElapsedTime = 0;
+
 const animate = () => {
   //GetElapsedTime
   const elapsedTime = clock.getElapsedTime();
+  const deltaTime = elapsedTime - previusElapsedTime;
+  previusElapsedTime = elapsedTime;
+
 
   //Update Controls
   orbitControls.update();
+
+  //! actualizar mundo
+  world.step(Math.min(deltaTime, 0.1));
+
+  //! actualizar posición de esfera
+  sphereMesh.position.copy(sphereBody.position);
 
   //Renderer
   renderer.render(scene, camera);
