@@ -58,13 +58,42 @@ renderer.setSize(aspect.width, aspect.height);
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+const meshes = [mesh, mesh2];
+const oneIntersectMesh = [];
 
 window.addEventListener('mousemove', (e) => {
   pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
   raycaster.setFromCamera(pointer, camera);
-  const intersects = raycaster.intersectObjects([mesh, mesh2]);
+  const intersects = raycaster.intersectObjects(meshes);
+
+  // for ( let i = 0; i < intersects.length; i ++ ) {
+	// 	intersects[ i ].object.material.color.set( 0xff0000 );
+	// }
+  if(intersects.length > 0){
+    if(oneIntersectMesh.length < 1){
+      oneIntersectMesh.push(intersects[0]);
+    }
+    oneIntersectMesh[0].object.material.color.set('red');
+    gsap.to(oneIntersectMesh[0].object.scale,{
+      duration: 0.5,
+      x: 1.25,
+      y: 1.25,
+      z: 1.25,
+    });
+    console.log(oneIntersectMesh);
+  }else if(oneIntersectMesh[0] !== undefined){
+    oneIntersectMesh[0].object.material.color.set('white');
+    gsap.to(oneIntersectMesh[0].object.scale,{
+      duration: 0.5,
+      x: 1,
+      y: 1,
+      z: 1,
+    });
+    oneIntersectMesh.shift();
+  }
+
   console.log(intersects);
 });
 
