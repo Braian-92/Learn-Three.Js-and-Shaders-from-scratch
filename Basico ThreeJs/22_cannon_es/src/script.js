@@ -102,6 +102,15 @@ const sphereBody = new CANNON.Body({
 });
 world.addBody(sphereBody);
 
+setInterval(() => {
+  sphereBody.applyLocalForce(
+    new CANNON.Vec3(0, 500, 0),
+    new CANNON.Vec3(-0.1, 0, 0),
+  );
+  console.log('aplicar fuerza');
+}, 5000);
+
+
 //! forma plana en mundo fisico
 const planeShape = new CANNON.Plane();
 const planeBody = new CANNON.Body({
