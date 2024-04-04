@@ -54,6 +54,15 @@ planeMesh.rotation.x = -Math.PI * 0.5;
 
 scene.add(planeMesh);
 
+//! 3 cuadrado
+const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const boxMaterial = new THREE.MeshStandardMaterial();
+const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+
+boxMesh.position.set(1, 2, 0);
+boxMesh.castShadow = true;
+scene.add(boxMesh);
+
 //Camera
 const aspect = {
   width: window.innerWidth,
@@ -104,6 +113,18 @@ const planeBody = new CANNON.Body({
 planeBody.quaternion.setFromAxisAngle( new CANNON.Vec3(1, 0, 0), -Math.PI * 0.5 );
 world.addBody(planeBody);
 
+//! forma cuadrada en mundo físico
+const boxShape = new CANNON.Box( new CANNON.Vec3(0.25, 0.25, 0.25) );
+const boxBody = new CANNON.Body({
+  mass: 1,
+  position: new CANNON.Vec3(1, 2, 0),
+  shape: boxShape,
+  material: plasticMaterial
+});
+
+world.addBody(boxBody);
+
+
 //Renderer
 const canvas = document.querySelector(".draw");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -133,8 +154,10 @@ const animate = () => {
   //! actualizar mundo
   world.step(Math.min(deltaTime, 0.1));
 
-  //! actualizar posición de esfera
+  //! actualizar posición de elementos 3d en mundo fisico
   sphereMesh.position.copy(sphereBody.position);
+  boxMesh.position.copy(boxBody.position);
+  boxMesh.quaternion.copy(boxBody.quaternion);
 
   //Renderer
   renderer.render(scene, camera);
