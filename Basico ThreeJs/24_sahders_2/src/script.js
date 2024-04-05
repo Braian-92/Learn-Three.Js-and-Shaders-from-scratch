@@ -4,6 +4,8 @@ import {
   MapControls,
   OrbitControls,
 } from "three/examples/jsm/controls/OrbitControls";
+import vShader from "./shaders/vertex.glsl";
+import fShader from "./shaders/fragment.glsl";
 
 //Scene
 const scene = new THREE.Scene();
@@ -25,7 +27,10 @@ window.addEventListener("resize", () => {
 
 //Mesh
 const geometry = new THREE.PlaneBufferGeometry(1, 1);
-const material = new THREE.MeshBasicMaterial();
+const material = new THREE.RawShaderMaterial({
+  vertexShader: vShader,
+  fragmentShader: fShader,
+});
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
