@@ -1,4 +1,5 @@
 precision mediump float;
+uniform float u_time;
 
 varying vec2 v_uv;
 
@@ -34,6 +35,6 @@ float snoise(vec2 v){
 }
 
 void main() {
-    float simple_x = snoise(v_uv*20.0);
-    gl_FragColor = vec4(simple_x,simple_x,simple_x, 1.0);
+    float simple_x = snoise(v_uv*20.0+u_time);
+    gl_FragColor = vec4(simple_x*0.2,simple_x,simple_x, 1.0);
 }

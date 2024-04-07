@@ -36,6 +36,9 @@ const material = new THREE.RawShaderMaterial({
   side: THREE.DoubleSide,
   vertexShader: vShader,
   fragmentShader: fShader,
+  uniforms: {
+    u_time: {value:0}
+  }
 });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
@@ -64,6 +67,8 @@ const clock = new THREE.Clock();
 const animate = () => {
   //GetElapsedTime
   const elapsedTime = clock.getElapsedTime();
+
+  material.uniforms.u_time.value = elapsedTime;
 
   //Update Controls
   orbitControls.update();
