@@ -11,6 +11,9 @@ import fShader from "./shaders/fragment.glsl";
 //Scene
 const scene = new THREE.Scene();
 
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('/texture/flower.jpg');
+
 //Datgui
 // const gui = new dat.GUI();
 
@@ -36,7 +39,9 @@ const material = new THREE.RawShaderMaterial({
   side: THREE.DoubleSide,
   vertexShader: vShader,
   fragmentShader: fShader,
-  uniforms: {},
+  uniforms: {
+    u_texture:{value:texture}
+  },
 });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
